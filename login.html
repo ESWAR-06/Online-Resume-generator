@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ResumeCraft | Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+  <!-- LEFT PANEL -->
+  <div class="left">
+    <div class="brand">
+      <span class="icon">📄</span>
+      <span class="name">ResumeCraft</span>
+    </div>
+
+    <h1>Build Your Professional<br>Resume Online</h1>
+    <p>
+      Create, edit, and download resumes in minutes.
+      Stand out with professionally designed templates.
+    </p>
+
+    <ul class="features">
+      <li>✔ Easy-to-use resume builder</li>
+      <li>✔ Professional templates</li>
+      <li>✔ Download in multiple formats</li>
+    </ul>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right">
+    <div class="card">
+      <h2>Welcome Back</h2>
+      <p class="subtitle">Login to continue</p>
+
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+
+      <div class="divider">
+        <span></span>
+        <p>or</p>
+        <span></span>
+      </div>
+
+      <button class="btn-google">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg">
+        Continue with Google
+      </button>
+
+      <p class="link-text">
+        New user? <a href="register.html">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
