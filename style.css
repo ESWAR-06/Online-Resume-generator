@@ -118,6 +118,38 @@ input:focus {
   opacity: 0.9;
 }
 
+/* CAPTCHA */
+.captcha-box {
+  margin-top: 20px;
+}
+
+.captcha-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+#captchaQuestion {
+  font-weight: bold;
+  background: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+}
+
+.refresh-btn {
+  background: #eee;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.refresh-btn:hover {
+  background: #ddd;
+}
+
 .divider {
   display: flex;
   align-items: center;
@@ -165,7 +197,7 @@ input:focus {
   text-decoration: none;
 }
 
-/* RESPONSIVE */
+/* Responsive */
 @media (max-width: 900px) {
   .left {
     display: none;
