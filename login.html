@@ -2,93 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ResumeCraft | Templates</title>
+  <title>ResumeCraft | Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="dashboard-header">
-  <div class="logo">📄 ResumeCraft</div>
-  <button class="logout-btn" onclick="logout()">Logout</button>
-</header>
+<div class="container">
+  <div class="right">
+    <div class="card">
+      <h2>Login</h2>
 
-<!-- MAIN SECTION -->
-<section class="dashboard-container">
+      <form id="loginForm">
+        <label>Email</label>
+        <input type="email" id="loginEmail" required>
 
-  <!-- LEFT: TEMPLATES -->
-  <div class="templates-area">
-    <h2>Choose a Resume Template</h2>
+        <label>Password</label>
+        <input type="password" id="loginPassword" required>
 
-    <div class="template-grid">
+        <!-- CAPTCHA -->
+        <label>Solve CAPTCHA:</label>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span id="captchaQuestion"></span>
+          <button type="button" id="refreshCaptcha">↻</button>
+        </div>
+        <input type="text" id="captchaInput" placeholder="Enter answer" required>
 
-      <!-- 8 Templates -->
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4" alt="">
-        <h3>Modern Professional</h3>
-        <button onclick="location.href='template1.html'">Use Template</button>
-      </div>
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
 
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c" alt="">
-        <h3>Creative Design</h3>
-        <button onclick="location.href='template2.html'">Use Template</button>
-      </div>
+      <p id="loginMessage" style="color:red;"></p>
 
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="">
-        <h3>Minimal Clean</h3>
-        <button onclick="location.href='template3.html'">Use Template</button>
-      </div>
-
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d" alt="">
-        <h3>Corporate Style</h3>
-        <button onclick="location.href='template4.html'">Use Template</button>
-      </div>
-
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf" alt="">
-        <h3>Executive Format</h3>
-        <button onclick="location.href='template5.html'">Use Template</button>
-      </div>
-
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f" alt="">
-        <h3>Tech Resume</h3>
-        <button onclick="location.href='template6.html'">Use Template</button>
-      </div>
-
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="">
-        <h3>Elegant Layout</h3>
-        <button onclick="location.href='template7.html'">Use Template</button>
-      </div>
-
-      <div class="template-card">
-        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d" alt="">
-        <h3>Simple Fresh</h3>
-        <button onclick="location.href='template8.html'">Use Template</button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- RIGHT: CUSTOM BUILDER -->
-  <div class="custom-builder-area">
-    <div class="custom-builder-card">
-      <h2>Craft Your Own Resume</h2>
-      <p>
-        Want full control over design and layout?
-        Start from scratch and build a completely customized resume.
+      <p class="link-text">
+        Don't have an account? <a href="register.html">Register here</a>
       </p>
-      <button onclick="location.href='custom-builder.html'">
-        Start Building Now
-      </button>
     </div>
   </div>
-
-</section>
+</div>
 
 <script src="script.js"></script>
 </body>
