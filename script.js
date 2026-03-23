@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
 
   const API_URL = "http://127.0.0.1:5000";
 
@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   let correctAnswer = null;
 
   function generateCaptcha() {
-    const captchaQuestion = document.getElementById("captchaQuestion");
-    if (!captchaQuestion) return;
+    const captchaQuestion = $("#captchaQuestion");
+    if (!captchaQuestion.length) return;
 
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const operators = ["+", "-", "*"];
     const operator = operators[Math.floor(Math.random() * operators.length)];
 
-    captchaQuestion.innerText = `${num1} ${operator} ${num2}`;
+    captchaQuestion.text(`${num1} ${operator} ${num2}`);
 
     switch (operator) {
       case "+": correctAnswer = num1 + num2; break;
@@ -27,97 +27,94 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  const refreshBtn = document.getElementById("refreshCaptcha");
-  if (refreshBtn) {
-    refreshBtn.addEventListener("click", generateCaptcha);
+  $("#refreshCaptcha").click(function () {
     generateCaptcha();
-  }
+  });
+
+  generateCaptcha();
+
 
   /* =========================
      REGISTER FORM
   ========================== */
 
-  const registerForm = document.getElementById("registerForm");
+  $("#registerForm").submit(function (e) {
+    e.preventDefault();
 
-  if (registerForm) {
-    registerForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    const name = $("#regName").val().trim();
+    const email = $("#regEmail").val().trim();
+    const password = $("#regPassword").val();
+    const confirm = $("#regConfirmPassword").val();
+    const message = $("#registerMessage");
 
-      const name = document.getElementById("regName").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const password = document.getElementById("regPassword").value;
-      const confirm = document.getElementById("regConfirmPassword").value;
-      const message = document.getElementById("registerMessage");
+    if (password !== confirm) {
+      message.text("Passwords do not match");
+      return;
+    }
 
-      if (password !== confirm) {
-        message.innerText = "Passwords do not match";
-        return;
-      }
+    $.ajax({
+      url: `${API_URL}/register`,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        username: email,
+        password: password
+      }),
 
-      try {
-        const response = await fetch(`${API_URL}/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: email, password: password })
-        });
+      success: function (result) {
+        message.css("color", "green").text(result.message);
 
-        const result = await response.json();
-        message.innerText = result.message;
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 1000);
+      },
 
-        if (response.status === 200) {
-          setTimeout(() => {
-            window.location.href = "login.html";
-          }, 1000);
-        }
-
-      } catch (error) {
-        message.innerText = "Server error. Is Flask running?";
+      error: function (xhr) {
+        const res = xhr.responseJSON;
+        message.css("color", "red").text(res ? res.message : "Server error");
       }
     });
-  }
+  });
+
 
   /* =========================
      LOGIN FORM
   ========================== */
 
-  const loginForm = document.getElementById("loginForm");
+  $("#loginForm").submit(function (e) {
+    e.preventDefault();
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    const email = $("#loginEmail").val().trim();
+    const password = $("#loginPassword").val();
+    const captchaInput = $("#captchaInput").val().trim();
+    const message = $("#loginMessage");
 
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
-      const captchaInput = document.getElementById("captchaInput").value.trim();
-      const message = document.getElementById("loginMessage");
+    if (parseInt(captchaInput) !== correctAnswer) {
+      message.text("Incorrect CAPTCHA!");
+      generateCaptcha();
+      return;
+    }
 
-      if (parseInt(captchaInput) !== correctAnswer) {
-        message.innerText = "Incorrect CAPTCHA!";
-        generateCaptcha();
-        return;
-      }
+    $.ajax({
+      url: `${API_URL}/login`,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        username: email,
+        password: password
+      }),
 
-      try {
-        const response = await fetch(`${API_URL}/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: email, password: password })
-        });
+      success: function (result) {
+        localStorage.setItem("loggedInUser", email);
+        window.location.href = "dashboard.html";
+      },
 
-        const result = await response.json();
-
-        if (response.status === 200) {
-          localStorage.setItem("loggedInUser", email);
-          window.location.href = "dashboard.html";
-        } else {
-          message.innerText = result.message;
-        }
-
-      } catch (error) {
-        message.innerText = "Server error. Is Flask running?";
+      error: function (xhr) {
+        const res = xhr.responseJSON;
+        message.text(res ? res.message : "Login failed");
       }
     });
-  }
+  });
 
 });
 
